@@ -19,6 +19,7 @@ CREATE TABLE carts (
 -- One cart to many products
 CREATE TABLE cart_products (
     cart_id TEXT REFERENCES carts(id) ON DELETE CASCADE,
+    -- For a given cart_id, product_id should be unique. Can we constrain easily in schema?
     product_id INTEGER REFERENCES products(id),
     quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity > 0)
 );
