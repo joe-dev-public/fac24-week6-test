@@ -2,15 +2,31 @@ BEGIN;
 
 DROP TABLE IF EXISTS test CASCADE;
 
-CREATE TABLE test (
+CREATE TABLE products (
     id SERIAL PRIMARY KEY,
-    text TEXT NOT NULL
+    name TEXT NOT NULL,
+    price MONEY NOT NULL DEFAULT 0,
+    description TEXT DEFAULT NULL
 );
 
-INSERT INTO test (text) VALUES
-    ('Hello world'),
-    ('Just testing'),
-    ('3/4'),
-    ('Last one');
+CREATE TABLE sessions (
+    sid TEXT UNIQUE NOT NULL PRIMARY KEY,
+    cart_id INTEGER REFERENCES carts(id) ON DELETE CASCADE
+);
+
+CREATE TABLE carts (
+    id SERIAL PRIMARY KEY
+);
+
+CREATE TABLE cart_products (
+    cart_id INTEGER REFERENCES carts(id),
+    product_id INTEGER REFERENCES products(id)
+);
+
+INSERT INTO products (name, price, description) VALUES
+    ('Doohickey'),
+    ('Thingummybob'),
+    ('Widget'),
+    ('Whatsit');
 
 COMMIT;
