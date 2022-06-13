@@ -21,6 +21,6 @@ then
 else
   echo "Found \$DATABASE_URL in .env"
   echo "Now executing database init file in psql..."
-  psql $DATABASE_URL -q -f "./database/init.sql"
+  psql $DATABASE_URL -q -f "./lib/database/init.sql"
   echo "Populated database tables"
 fi
