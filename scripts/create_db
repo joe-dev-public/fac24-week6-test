@@ -5,8 +5,7 @@ set -e
 
 # name will be whatever the first argument is when called
 # e.g. ./scripts/create_db test => DB_NAME='test' (defaults to "example")
-DB_NAME=${1:-fac24-week6-test}
-
+DB_NAME="fac24-week6-test"
 
 psql -q -c "CREATE USER ${DB_NAME}user SUPERUSER PASSWORD 'pass123'"
 echo "Created Postgres user '${DB_NAME}user'"
