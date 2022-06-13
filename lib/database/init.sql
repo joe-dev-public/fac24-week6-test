@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TABLE IF EXISTS products, carts, cart_products CASCADE;
+DROP TABLE IF EXISTS products, product_images, carts, cart_products CASCADE;
 
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
@@ -9,6 +9,12 @@ CREATE TABLE products (
     -- price MONEY NOT NULL DEFAULT 0 CHECK (price >= 0),
     price MONEY NOT NULL DEFAULT 0,
     description TEXT DEFAULT NULL
+);
+
+-- One product to many product images
+CREATE TABLE product_images (
+    product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+    image_src TEXT NOT NULL
 );
 
 -- Like a session (unique, unguessable id)
@@ -32,6 +38,11 @@ INSERT INTO products (name, price, description) VALUES
 -- Test the default price
 INSERT INTO products (name, description) VALUES
     ('Whatsit', 'Not to be confused with the orange snack.');
+
+INSERT INTO product_images (product_id, image_src) VALUES
+    (1, '/images/product1.jpg'),
+    (2, '/images/product2.jpg'),
+    (3, '/images/product3.jpg');
 
 INSERT INTO carts (id) VALUES
     ('auniquecartid1'),
