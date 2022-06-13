@@ -1,20 +1,19 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { getData } from "../lib/database/model";
+import { getCartProducts } from "../lib/database/model";
 
 export async function getServerSideProps() {
-  // You have to await if you want to log here...
-  const allData = await getData();
-  // console.log(allData);
+  // Don't forget to await
+  const cartData = await getCartProducts("auniquecartid1");
   return {
     props: {
-      allData,
+      cartData,
     },
   };
 }
 
-export default function Home({ allData }) {
+export default function Home({ cartData }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -25,8 +24,11 @@ export default function Home({ allData }) {
 
       <main className={styles.main}>
         <ul>
-          {allData.map((row) => (
-            <li key={row.id}>{row.text}</li>
+          {cartData.map((row) => (
+            <li key={row.id}>
+              {row.name}: {row.price} x {row.quantity} = {row.total_price}{" "}
+              (subtotal)
+            </li>
           ))}
         </ul>
       </main>
